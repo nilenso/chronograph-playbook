@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - role: webserver
+      vars:
+        chronograph_jar: ./chronograph.jar

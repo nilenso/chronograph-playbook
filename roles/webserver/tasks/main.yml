@@ -1,0 +1,44 @@
+---
+- name: Install JRE
+  apt:
+    name: openjdk-11-jre
+    state: present
+  tags: jre
+
+- name: Copy the jar
+  copy:
+    src: "{{ chronograph_jar }}"
+    dest: /opt/chronograph.jar
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create the chronograph config directory
+  file:
+    path: /etc/chronograph
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Copy the configuration
+  template:
+    src: config.edn.j2
+    dest: /etc/chronograph/config.edn
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy the service file
+  template:
+    src: chronograph.service.j2
+    dest: /etc/systemd/system/chronograph.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable and start the service
+  systemd:
+    name: chronograph
+    state: started
+    enabled: true
