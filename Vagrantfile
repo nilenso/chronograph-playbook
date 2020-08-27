@@ -15,4 +15,8 @@ Vagrant.configure("2") do |config|
           chronograph_config: "./config.edn"
         }
     end
+
+    config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "test.yml"
+    end
 end
