@@ -5,29 +5,33 @@
     state: present
   tags: jre
 
+- name: Create chronograph user
+  user:
+    system: yes
+    name: chronograph
+  register: chronograph_user
+
+- set_fact:
+    deploy_user: "{{ chronograph_user.name }}"
+    deploy_group: "{{ chronograph_user.group }}"
+    deploy_chronograph_jar: "{{ chronograph_user.home }}/chronograph.jar"
+    deploy_chronograph_config: "{{ chronograph_user.home }}/config.edn"
+
 - name: Copy the jar
   copy:
     src: "{{ chronograph_jar }}"
-    dest: /opt/chronograph.jar
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: Create the chronograph config directory
-  file:
-    path: /etc/chronograph
-    state: directory
-    mode: '0755'
-    owner: root
-    group: root
+    dest: "{{ deploy_chronograph_jar }}"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
+    mode: '0600'
 
 - name: Copy the configuration
   copy:
     src: "{{ chronograph_config }}"
-    dest: /etc/chronograph/config.edn
-    owner: root
-    group: root
-    mode: '0644'
+    dest: "{{ deploy_chronograph_config }}"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
+    mode: '0600'
 
 - name: Copy the service file
   template:

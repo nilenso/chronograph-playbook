@@ -2,7 +2,9 @@
 Description=Chronograph Webserver
 
 [Service]
-ExecStart=java -jar /opt/chronograph.jar -sf /etc/chronograph/config.edn
+User={{ deploy_user }}
+Group={{ deploy_group }}
+ExecStart=java -jar {{ deploy_chronograph_jar }} -sf {{ deploy_chronograph_config }}
 
 [Install]
 WantedBy=multi-user.target
