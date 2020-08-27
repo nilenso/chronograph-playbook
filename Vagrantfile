@@ -10,11 +10,9 @@ Vagrant.configure("2") do |config|
         ansible.become = true
         ansible.verbose = "v"
         ansible.playbook = "webserver.yml"
-    end
-
-    config.vm.provision "ansible" do |ansible|
-        ansible.become = true
-        ansible.verbose = "v"
-        ansible.playbook = "test.yml"
+        ansible.extra_vars = {
+          chronograph_jar: "./chronograph.jar",
+          chronograph_config: "./config.edn"
+        }
     end
 end

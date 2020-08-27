@@ -22,8 +22,8 @@
     group: root
 
 - name: Copy the configuration
-  template:
-    src: config.edn.j2
+  copy:
+    src: "{{ chronograph_config }}"
     dest: /etc/chronograph/config.edn
     owner: root
     group: root
