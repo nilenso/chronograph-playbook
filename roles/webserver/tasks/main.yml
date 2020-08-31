@@ -39,7 +39,7 @@
     dest: /etc/systemd/system/chronograph.service
     owner: root
     group: root
-    mode: '0644'
+    mode: '0600'
 
 - name: Enable and start the service
   systemd:
