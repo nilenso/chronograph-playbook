@@ -1,6 +1,9 @@
 ---
 - hosts: all
   tasks:
+  # Pause to allow the server to start up.
+  - pause:
+      seconds: 5
   - name: GET /
     get_url:
       url: http://localhost:8000/

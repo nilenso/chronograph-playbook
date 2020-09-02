@@ -41,6 +41,9 @@
     group: root
     mode: '0600'
 
+- name: Run the migrations
+  command: java -jar {{ deploy_chronograph_jar|quote }} -mf {{ deploy_chronograph_config|quote }}
+
 - name: Enable and start the service
   systemd:
     name: chronograph
