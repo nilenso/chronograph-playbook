@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+  - name: GET /
+    get_url:
+      url: http://localhost:8000/
+      dest: /tmp/vagrant_test.output
